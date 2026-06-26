@@ -1,4 +1,4 @@
-# 🏙️ PROPTECH CABA: Inteligencia Inmobiliaria
+# Grupo 4 - Entrega TP Final Descriptiva
 
 > Análisis del mercado de departamentos en venta en la Ciudad Autónoma de Buenos Aires.
 
