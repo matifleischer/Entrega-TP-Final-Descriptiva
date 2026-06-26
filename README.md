@@ -236,13 +236,13 @@ El dashboard integra los resultados de todas las etapas en un tablero interactiv
 
 ---
 
-## 🏆 Top 20 Oportunidades de Inversión
+## Top 20 Oportunidades de Inversión
 
 La entrega final incluye un CSV con las **20 mejores oportunidades de compra** identificadas en el dataset completo: propiedades donde la brecha entre el precio predicho por XGBoost y el precio publicado es mayor, indicando una subvaluación significativa respecto a sus características objetivas.
 
 ---
 
-## 📊 Conclusiones
+## Conclusiones
 
 - El barrio es el principal determinante de valor, confirmado de forma convergente por el mapa geográfico, el ANOVA y el clustering.
 - Existen oportunidades reales: más del 10% del mercado aparece subvaluado según el modelo.
@@ -250,10 +250,46 @@ La entrega final incluye un CSV con las **20 mejores oportunidades de compra** i
 - El precio absoluto no alcanza para identificar oportunidades: lo que importa es el precio relativo dentro del propio barrio.
 - Tres métodos distintos (estadístico, predictivo, no supervisado) convergieron en la misma conclusión.
 
-## 📋 Recomendaciones para el cliente
+## Recomendaciones para el cliente
 
 - Priorizar los barrios con mayor proporción de oportunidades fuertes.
 - Evaluar cada propiedad contra su propio barrio, no contra el promedio de CABA.
 - Usar el modelo XGBoost como filtro inicial de búsqueda antes de visitar propiedades.
 - Diferenciar la estrategia de negocio según el segmento de clustering (flipping aplica distinto en Premium que en Accesible).
 - Adoptar el dashboard como herramienta de monitoreo continuo del mercado.
+
+## Limitaciones y Líneas Futuras
+
+Limitaciones del estudio
+
+- Cobertura parcial del mercado: el dataset cubre 21 barrios seleccionados y representa aproximadamente el 23% de las publicaciones de Zonaprop en el momento del scraping. Los resultados no son necesariamente extrapolables a toda CABA ni a otros portales.
+- Datos de publicación, no de transacción: los precios analizados son precios de lista, no precios de cierre. En el mercado inmobiliario argentino, la brecha entre ambos puede ser significativa y varía según el contexto macroeconómico.
+- Snapshot estático: el scraping se realizó en un momento puntual. El mercado inmobiliario es dinámico y los precios, la oferta y las oportunidades cambian continuamente.
+- Modelo predictivo sobre precio de publicación: el XGBoost predice el precio publicado, no el valor real de mercado. Una propiedad identificada como "oportunidad" requiere validación presencial antes de cualquier decisión de inversión.
+- Variables no capturadas: factores como el estado de conservación del inmueble, la calidad constructiva del edificio, la orientación del departamento o la vista no están disponibles en los datos scrapeados y pueden explicar parte de la variabilidad residual del modelo.
+
+
+## Líneas futuras de investigación y mejora
+
+- Ampliar la cobertura: incorporar los barrios faltantes y cruzar con otros portales (MercadoLibre Inmuebles, Remax) para tener una visión más completa del mercado.
+- Datos de alquiler: cruzar el dataset de venta con publicaciones de alquiler para calcular rentabilidad bruta estimada por zona y tipología, dando una herramienta más completa al inversor.
+- Series temporales: repetir el scraping periódicamente para detectar tendencias de precio, velocidad de rotación del stock y evolución de los barrios emergentes.
+- Enriquecimiento de fuentes externas: incorporar datos de permisos de obra, líneas de subte en construcción, variación del tipo de cambio y otros indicadores macroeconómicos que impactan en el mercado.
+- Mejora del modelo: explorar modelos espaciales (GWR - Geographically Weighted Regression) que permitan capturar el efecto de la ubicación de forma más granular que el barrio como variable categórica.
+
+
+## Reflexión: Llevar el Proyecto a Producción
+
+Para que este proyecto deje de ser un análisis estático y se convierta en una herramienta de monitoreo continuo, se requerirían los siguientes componentes:
+
+1. Pipeline de datos automatizado
+Automatizar el scraping mediante un scheduler (por ejemplo, Apache Airflow o simplemente un cron job en un servidor cloud) que ejecute el script de extracción semanalmente, almacene los datos en una base de datos estructurada (PostgreSQL o similar) y mantenga un historial de precios por propiedad.
+
+2. Reentrenamiento del modelo
+Con datos frescos acumulados, el modelo XGBoost debería reentrenarse periódicamente para adaptarse a cambios de mercado. Esto puede automatizarse con un pipeline de MLOps básico usando herramientas como MLflow para versionar modelos y monitorear métricas de performance en el tiempo.
+
+3. Dashboard conectado a datos en vivo
+Reemplazar los CSVs estáticos por una conexión directa a la base de datos desde Power BI Service, configurando una actualización automática del tablero (scheduled refresh). Esto permitiría que el cliente vea el estado actual del mercado sin intervención manual.
+
+4. Sistema de alertas
+Agregar una capa de notificaciones que alerte al equipo de inversión cuando el modelo detecte una nueva oportunidad fuerte (precio publicado < precio predicho - RMSE) en los barrios de interés, enviando un resumen por email o Slack con el link a la publicación.
