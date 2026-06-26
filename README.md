@@ -6,7 +6,7 @@
 
 ## 📌 Caso de Negocio
 
-Este proyecto simula el trabajo de una consultora cuyo cliente es una startup ficticia que tiene el objetivo de detectar propiedades subvaluadas dentro del mercado, para destinarlas a distintos modelos de negocio:
+Este proyecto esta dirigido a una startup ficticia que tiene el objetivo de detectar propiedades subvaluadas dentro del mercado, para destinarlas a distintos modelos de negocio:
 
 - **Flipping inmobiliario:** adquisición de propiedades con potencial de mejora, refacción y posterior venta a un valor superior.
 - **Generación de renta:** compra de inmuebles a precios por debajo del mercado para destinarlos a alquiler.
