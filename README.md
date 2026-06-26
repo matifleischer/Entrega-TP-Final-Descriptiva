@@ -185,12 +185,11 @@ El modelo genera `predicciones_xgboost.csv` con el precio real publicado y el pr
 
 ## 6. Clustering K-Means — `clustering.ipynb`
 
-Se aplicó **K-Means** sobre el dataset con el objetivo de identificar segmentos de mercado naturales más allá de la clasificación administrativa por barrio.
+Se aplicó **K-Means** sobre el dataset con el objetivo de identificar segmentos de mercado.
 
 ### Preprocesamiento
 
-- Eliminación de columnas no relevantes para la segmentación (coordenadas, link, precio total, superficie total).
-- Imputación de `Indice_Seguridad` nulos con la mediana del barrio.
+- Eliminación de columnas no relevantes para la segmentación.
 - Codificación de barrios mediante `get_dummies`.
 - Escalado con `StandardScaler`.
 
